@@ -16,21 +16,23 @@
   <meta name="author" content="Viston Zhang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="what can i say hltv out  1.环境说明代码使用的环境为vscode+conda，python版本为3.11，环境配置参照其他博主写的安装教程安装即可。本代码使用了 Undetected_chromedriver用于绕开hltv的clloudflare反爬， 可以直接在终端使用conda install conda-forge::undetected-chromedriver">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://vistonz.github.io/2024/07/23/hello-world/index.html">
+<meta property="og:title" content="Python 编写的HLTV网站选手数据页面爬取脚本">
+<meta property="og:url" content="http://vistonz.github.io/2024/07/23/hltv/index.html">
 <meta property="og:site_name" content="Viston&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="what can i say hltv out  1.环境说明代码使用的环境为vscode+conda，python版本为3.11，环境配置参照其他博主写的安装教程安装即可。本代码使用了 Undetected_chromedriver用于绕开hltv的clloudflare反爬， 可以直接在终端使用conda install conda-forge::undetected-chromedriver">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-07-23T07:39:31.189Z">
-<meta property="article:modified_time" content="2024-07-23T07:39:31.189Z">
+<meta property="og:image" content="http://vistonz.github.io/2024/07/23/hltv/test.png">
+<meta property="article:published_time" content="2024-07-23T08:31:57.000Z">
+<meta property="article:modified_time" content="2024-07-23T13:35:22.766Z">
 <meta property="article:author" content="Viston Zhang">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://vistonz.github.io/2024/07/23/hltv/test.png">
   
   
   
-  <title>Hello World - Viston&#39;s Blog</title>
+  <title>Python 编写的HLTV网站选手数据页面爬取脚本 - Viston&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -225,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="Python 编写的HLTV网站选手数据页面爬取脚本"></span>
           
         </div>
 
@@ -236,7 +238,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-23 15:39" pubdate>
+        <time datetime="2024-07-23 16:31" pubdate>
           2024年7月23日 下午
         </time>
       </span>
@@ -248,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18 字
+          707 字
         
       </span>
     
@@ -259,7 +261,7 @@
         
         
         
-          1 分钟
+          6 分钟
         
       </span>
     
@@ -304,24 +306,41 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hello World</h1>
+            <h1 id="seo-header">Python 编写的HLTV网站选手数据页面爬取脚本</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+                <div class="code-wrapper"><pre><code class="hljs cpp">what can i say
+hltv out</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
+<h3 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1.环境说明"></a>1.环境说明</h3><p>代码使用的环境为vscode+conda，python版本为3.11，环境配置参照其他博主写的安装教程安装即可。<br>本代码使用了 Undetected_chromedriver用于绕开hltv的clloudflare反爬， 可以直接在终端使用<code>conda install conda-forge::undetected-chromedriver</code>安装插件。<br>本代码使用了 openpyxl用于生成选手数据表格 ， 可以直接在终端使用<code>conda install anaconda::openpyxl</code>安装插件。</p>
+<h3 id="2-代码介绍"><a href="#2-代码介绍" class="headerlink" title="2.代码介绍"></a>2.代码介绍</h3><p>首先是导入部分：</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-keyword">import</span> re 
+<span class="hljs-keyword">import</span> os 
+<span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+<span class="hljs-keyword">import</span> undetected_chromedriver <span class="hljs-keyword">as</span> uc
+<span class="hljs-keyword">import</span> time</code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
+<p>然后是一个可以更改的初始状态区，用于列出需要筛选的赛事</p>
+<div class="code-wrapper"><pre><code class="hljs py">webfront=<span class="hljs-string">&quot;https://www.hltv.org/stats/players&quot;</span><span class="hljs-comment">#默认头，无需更改</span>
+<span class="hljs-comment">#赛事筛选，在hltv筛选器中筛选后复制？之后的文字</span>
+eventfilter=<span class="hljs-string">&quot;?startDate=all&amp;event=7732&amp;event=7552&amp;event=7551&amp;event=7435&amp;event=7258&amp;event=7578&amp;event=7261&amp;event=7260&amp;event=7259&amp;event=7577&amp;event=7148&amp;event=7437&amp;event=7440&amp;event=7755&amp;event=7438&amp;event=7475&amp;event=7485&quot;</span>
+keyword = <span class="hljs-string">&quot;&gt;&quot;</span> <span class="hljs-comment">#用于清除rating和name之前的一些多余字符</span>
+supereliteevent = [<span class="hljs-string">&quot;&amp;event=7435&quot;</span>,<span class="hljs-string">&quot;&amp;event=7148&quot;</span>] <span class="hljs-comment">#手动添加超级精英赛事编号，按照格式</span>
+eliteevent = [<span class="hljs-string">&quot;&amp;event=7732&quot;</span>]  <span class="hljs-comment">#手动添加精英赛事编号，按照格式</span>
+bigevent = [<span class="hljs-string">&quot;&amp;event=7437&quot;</span>,<span class="hljs-string">&quot;&amp;event=7440&quot;</span>,<span class="hljs-string">&quot;&amp;event=7438&quot;</span>,<span class="hljs-string">&quot;&amp;event=7485&quot;</span>] <span class="hljs-comment">#手动添加大型赛事编号，按照格式</span>
+supereliteeventplayoff = [<span class="hljs-string">&quot;&amp;startDate=2024-02-09&amp;endDate=2024-02-12&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-03-28&amp;endDate=2024-04-02&quot;</span>] <span class="hljs-comment">#用于筛选淘汰赛</span>
+eliteeventplayoff = [<span class="hljs-string">&quot;&amp;startDate=2024-07-18&amp;endDate=2024-07-22&amp;bestOfX=BestOf3&quot;</span>] <span class="hljs-comment">#石油杯比较特殊，淘汰赛和小组赛在同一天，所以用bo3筛选</span>
+bigeventplayoff = [<span class="hljs-string">&quot;&amp;startDate=2024-04-11&amp;endDate=2024-04-14&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-05-09&amp;endDate=2024-05-13&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-05-31&amp;endDate=2024-06-03&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-06-15&amp;endDate=2024-06-17&quot;</span>] <span class="hljs-comment">#大型赛事淘汰赛</span>
+<span class="hljs-comment">#用于填写表格的第一行</span>
+description = [<span class="hljs-string">&quot;选手ID&quot;</span>,<span class="hljs-string">&quot;图池数&quot;</span>,<span class="hljs-string">&quot;rating&quot;</span>,<span class="hljs-string">&quot;rounds&quot;</span>,<span class="hljs-string">&quot;CTrating&quot;</span>,<span class="hljs-string">&quot;Trating&quot;</span>,<span class="hljs-string">&quot;首杀尝试&quot;</span>,<span class="hljs-string">&quot;首杀成功&quot;</span>,<span class="hljs-string">&quot;首杀rating&quot;</span>,<span class="hljs-string">&quot;手枪局rating&quot;</span>,<span class="hljs-string">&quot;DPR&quot;</span>,<span class="hljs-string">&quot;KAST&quot;</span>,<span class="hljs-string">&quot;IMPACT&quot;</span>,<span class="hljs-string">&quot;ADR&quot;</span>,<span class="hljs-string">&quot;KPR&quot;</span>,<span class="hljs-string">&quot;map vs top5&quot;</span>,<span class="hljs-string">&quot;rating vs top5&quot;</span>,<span class="hljs-string">&quot;map vs top10&quot;</span>,<span class="hljs-string">&quot;rating vs top10&quot;</span>,<span class="hljs-string">&quot;首杀次数&quot;</span>,<span class="hljs-string">&quot;0kill&quot;</span>,<span class="hljs-string">&quot;1kill&quot;</span>,<span class="hljs-string">&quot;2kill&quot;</span>,<span class="hljs-string">&quot;3kill&quot;</span>,<span class="hljs-string">&quot;4kill&quot;</span>,<span class="hljs-string">&quot;5kill&quot;</span>,<span class="hljs-string">&quot;0.85+&quot;</span>,<span class="hljs-string">&quot;1.00+&quot;</span>,<span class="hljs-string">&quot;1.15+&quot;</span>,<span class="hljs-string">&quot;1.30+&quot;</span>,<span class="hljs-string">&quot;1v1&quot;</span>,<span class="hljs-string">&quot;1v2&quot;</span>,<span class="hljs-string">&quot;1v3&quot;</span>,<span class="hljs-string">&quot;1v4&quot;</span>,<span class="hljs-string">&quot;1v5&quot;</span>,<span class="hljs-string">&quot;big event map&quot;</span>,<span class="hljs-string">&quot;big event rating&quot;</span>,<span class="hljs-string">&quot;elite event map&quot;</span>,<span class="hljs-string">&quot;elite event rating&quot;</span>,<span class="hljs-string">&quot;superelite event map&quot;</span>,<span class="hljs-string">&quot;supereliteevent rating&quot;</span>,<span class="hljs-string">&quot;big event playoff map&quot;</span>,<span class="hljs-string">&quot;big event playoff rating&quot;</span>,<span class="hljs-string">&quot;elite event playoff map&quot;</span>,<span class="hljs-string">&quot;elite event playoff rating&quot;</span>,<span class="hljs-string">&quot;superelite event playoff map&quot;</span>,<span class="hljs-string">&quot;superelite event playoff rating&quot;</span>,<span class="hljs-string">&quot;win map rating&quot;</span>]
+ws.append(description) <span class="hljs-comment">#上传表格的第一行</span>
+minMapCountfilter=<span class="hljs-string">&quot;&amp;minMapCount=45&quot;</span> <span class="hljs-comment"># 图池数筛选器，更改数字使用</span>
+minrating = <span class="hljs-number">1.09</span> <span class="hljs-comment">#大于此数的选手rating纳入统计</span>
+file_path = os.path.join(<span class="hljs-string">&quot;E:\\hltv&quot;</span>, <span class="hljs-string">&quot;rating.xlsx&quot;</span>) <span class="hljs-comment">#表格文件保存路径，根据需要更改</span></code></pre></div>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p><img src="/2024/07/23/hltv/test.png" srcset="/img/loading.gif" lazyload alt="图片引用方法二"></p>
 
                 
               </div>
@@ -339,8 +358,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>http://vistonz.github.io/2024/07/23/hello-world/</div>
+      <div>Python 编写的HLTV网站选手数据页面爬取脚本</div>
+      <div>http://vistonz.github.io/2024/07/23/hltv/</div>
     </div>
     <div class="license-meta">
       
@@ -383,12 +402,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2024/07/23/test/" title="写给自己的hexo使用指南">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">写给自己的hexo使用指南</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">

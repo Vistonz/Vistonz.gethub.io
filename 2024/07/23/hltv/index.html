@@ -1,0 +1,1237 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#919191">
+  <meta name="author" content="Viston Zhang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="pre {   overflow-y: auto;   max-height: 600px; }   what can i say hltv out  1.环境说明代码使用的环境为vscode+conda，python版本为3.11，环境配置参照其他博主写的安装教程安装即可。本代码使用了 Undetected_chromedriver用于绕开hltv的clloudflare反爬， 可以直接在终端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 编写的HLTV网站选手数据页面爬取脚本">
+<meta property="og:url" content="http://vistonz.github.io/2024/07/23/hltv/index.html">
+<meta property="og:site_name" content="Viston&#39;s Blog">
+<meta property="og:description" content="pre {   overflow-y: auto;   max-height: 600px; }   what can i say hltv out  1.环境说明代码使用的环境为vscode+conda，python版本为3.11，环境配置参照其他博主写的安装教程安装即可。本代码使用了 Undetected_chromedriver用于绕开hltv的clloudflare反爬， 可以直接在终端">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-23T08:31:57.000Z">
+<meta property="article:modified_time" content="2024-07-23T17:50:30.971Z">
+<meta property="article:author" content="Viston Zhang">
+<meta property="article:tag" content="Code">
+<meta property="article:tag" content="Game">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Python 编写的HLTV网站选手数据页面爬取脚本 - Viston&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"vistonz.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"17ns1rVQb5fKQ9FWqrWe4ejy-MdYXbMMI","app_key":"E7njpIc0p6QgvpuXq5RPNhhM","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Viston&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 编写的HLTV网站选手数据页面爬取脚本"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-23 16:31" pubdate>
+          2024年7月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 编写的HLTV网站选手数据页面爬取脚本</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <style>
+pre {
+  overflow-y: auto;
+  max-height: 600px;
+}
+</style>
+
+<div class="code-wrapper"><pre><code class="hljs cpp">what can i say
+hltv out</code></pre></div>
+
+<h3 id="1-环境说明"><a href="#1-环境说明" class="headerlink" title="1.环境说明"></a>1.环境说明</h3><p>代码使用的环境为vscode+conda，python版本为3.11，环境配置参照其他博主写的安装教程安装即可。<br>本代码使用了 Undetected_chromedriver用于绕开hltv的clloudflare反爬， 可以直接在终端使用<code>conda install conda-forge::undetected-chromedriver</code>安装插件。<br>本代码使用了 openpyxl用于生成选手数据表格 ， 可以直接在终端使用<code>conda install anaconda::openpyxl</code>安装插件。</p>
+<h3 id="2-代码介绍"><a href="#2-代码介绍" class="headerlink" title="2.代码介绍"></a>2.代码介绍</h3><p>首先介绍一下这个undetected_Chormedriver.它的使用方法和Selenium十分类似，但是有着更加出色的反爬虫能力。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#对于想要获得源码的人来说，只需要这几行就够了</span>
+driver = uc.Chrome() 
+driver.get(<span class="hljs-string">&quot;网址&quot;</span>) 
+content = driver.page_source</code></pre></div>
+
+<p>首先是导入部分和插件的基础设置：</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-keyword">import</span> re 
+<span class="hljs-keyword">import</span> os 
+<span class="hljs-keyword">from</span> openpyxl <span class="hljs-keyword">import</span> Workbook
+<span class="hljs-keyword">import</span> undetected_chromedriver <span class="hljs-keyword">as</span> uc
+<span class="hljs-keyword">import</span> time
+
+wb = Workbook()
+ws = wb.active
+driver = uc.Chrome()</code></pre></div>
+
+<p>然后是一个可以更改的初始状态区，用于列出需要筛选的赛事</p>
+<div class="code-wrapper"><pre><code class="hljs py">webfront=<span class="hljs-string">&quot;https://www.hltv.org/stats/players&quot;</span><span class="hljs-comment">#默认头，无需更改</span>
+<span class="hljs-comment">#赛事筛选，在hltv筛选器中筛选后复制？之后的文字</span>
+eventfilter=<span class="hljs-string">&quot;?startDate=all&amp;event=7732&amp;event=7552&amp;event=7551&amp;event=7435&amp;event=7258&amp;event=7578&amp;event=7261&amp;event=7260&amp;event=7259&amp;event=7577&amp;event=7148&amp;event=7437&amp;event=7440&amp;event=7755&amp;event=7438&amp;event=7475&amp;event=7485&quot;</span>
+keyword = <span class="hljs-string">&quot;&gt;&quot;</span> <span class="hljs-comment">#用于清除rating和name之前的一些多余字符</span>
+supereliteevent = [<span class="hljs-string">&quot;&amp;event=7435&quot;</span>,<span class="hljs-string">&quot;&amp;event=7148&quot;</span>] <span class="hljs-comment">#手动添加超级精英赛事编号，按照格式</span>
+eliteevent = [<span class="hljs-string">&quot;&amp;event=7732&quot;</span>]  <span class="hljs-comment">#手动添加精英赛事编号，按照格式</span>
+bigevent = [<span class="hljs-string">&quot;&amp;event=7437&quot;</span>,<span class="hljs-string">&quot;&amp;event=7440&quot;</span>,<span class="hljs-string">&quot;&amp;event=7438&quot;</span>,<span class="hljs-string">&quot;&amp;event=7485&quot;</span>] <span class="hljs-comment">#手动添加大型赛事编号，按照格式</span>
+supereliteeventplayoff = [<span class="hljs-string">&quot;&amp;startDate=2024-02-09&amp;endDate=2024-02-12&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-03-28&amp;endDate=2024-04-02&quot;</span>] <span class="hljs-comment">#用于筛选淘汰赛</span>
+eliteeventplayoff = [<span class="hljs-string">&quot;&amp;startDate=2024-07-18&amp;endDate=2024-07-22&amp;bestOfX=BestOf3&quot;</span>] <span class="hljs-comment">#石油杯比较特殊，淘汰赛和小组赛在同一天，所以用bo3筛选</span>
+bigeventplayoff = [<span class="hljs-string">&quot;&amp;startDate=2024-04-11&amp;endDate=2024-04-14&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-05-09&amp;endDate=2024-05-13&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-05-31&amp;endDate=2024-06-03&quot;</span>,<span class="hljs-string">&quot;&amp;startDate=2024-06-15&amp;endDate=2024-06-17&quot;</span>] <span class="hljs-comment">#大型赛事淘汰赛</span>
+<span class="hljs-comment">#用于填写表格的第一行</span>
+description = [<span class="hljs-string">&quot;选手ID&quot;</span>,<span class="hljs-string">&quot;图池数&quot;</span>,<span class="hljs-string">&quot;rating&quot;</span>,<span class="hljs-string">&quot;rounds&quot;</span>,<span class="hljs-string">&quot;CTrating&quot;</span>,<span class="hljs-string">&quot;Trating&quot;</span>,<span class="hljs-string">&quot;首杀尝试&quot;</span>,<span class="hljs-string">&quot;首杀成功&quot;</span>,<span class="hljs-string">&quot;首杀rating&quot;</span>,<span class="hljs-string">&quot;手枪局rating&quot;</span>,<span class="hljs-string">&quot;DPR&quot;</span>,<span class="hljs-string">&quot;KAST&quot;</span>,<span class="hljs-string">&quot;IMPACT&quot;</span>,<span class="hljs-string">&quot;ADR&quot;</span>,<span class="hljs-string">&quot;KPR&quot;</span>,<span class="hljs-string">&quot;map vs top5&quot;</span>,<span class="hljs-string">&quot;rating vs top5&quot;</span>,<span class="hljs-string">&quot;map vs top10&quot;</span>,<span class="hljs-string">&quot;rating vs top10&quot;</span>,<span class="hljs-string">&quot;首杀次数&quot;</span>,<span class="hljs-string">&quot;0kill&quot;</span>,<span class="hljs-string">&quot;1kill&quot;</span>,<span class="hljs-string">&quot;2kill&quot;</span>,<span class="hljs-string">&quot;3kill&quot;</span>,<span class="hljs-string">&quot;4kill&quot;</span>,<span class="hljs-string">&quot;5kill&quot;</span>,<span class="hljs-string">&quot;0.85+&quot;</span>,<span class="hljs-string">&quot;1.00+&quot;</span>,<span class="hljs-string">&quot;1.15+&quot;</span>,<span class="hljs-string">&quot;1.30+&quot;</span>,<span class="hljs-string">&quot;1v1&quot;</span>,<span class="hljs-string">&quot;1v2&quot;</span>,<span class="hljs-string">&quot;1v3&quot;</span>,<span class="hljs-string">&quot;1v4&quot;</span>,<span class="hljs-string">&quot;1v5&quot;</span>,<span class="hljs-string">&quot;big event map&quot;</span>,<span class="hljs-string">&quot;big event rating&quot;</span>,<span class="hljs-string">&quot;elite event map&quot;</span>,<span class="hljs-string">&quot;elite event rating&quot;</span>,<span class="hljs-string">&quot;superelite event map&quot;</span>,<span class="hljs-string">&quot;supereliteevent rating&quot;</span>,<span class="hljs-string">&quot;big event playoff map&quot;</span>,<span class="hljs-string">&quot;big event playoff rating&quot;</span>,<span class="hljs-string">&quot;elite event playoff map&quot;</span>,<span class="hljs-string">&quot;elite event playoff rating&quot;</span>,<span class="hljs-string">&quot;superelite event playoff map&quot;</span>,<span class="hljs-string">&quot;superelite event playoff rating&quot;</span>,<span class="hljs-string">&quot;win map rating&quot;</span>]
+ws.append(description) <span class="hljs-comment">#上传表格的第一行</span>
+minMapCountfilter=<span class="hljs-string">&quot;&amp;minMapCount=45&quot;</span> <span class="hljs-comment"># 图池数筛选器，更改数字使用</span>
+minrating = <span class="hljs-number">1.09</span> <span class="hljs-comment">#大于此数的选手rating纳入统计</span>
+file_path = os.path.join(<span class="hljs-string">&quot;E:\\hltv&quot;</span>, <span class="hljs-string">&quot;rating.xlsx&quot;</span>) <span class="hljs-comment">#表格文件保存路径，根据需要更改</span></code></pre></div>
+
+<p>之后就是列表整体数据的爬取时间~</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment"># 普通rating，图池</span>
+driver.get(webfront+eventfilter+minMapCountfilter) 
+time.sleep(<span class="hljs-number">5.3547</span>) <span class="hljs-comment">#可加可不加，加了提前点不需要rookie爬的会快一些</span>
+content = driver.page_source 
+Name = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+Mapcount = re.findall(<span class="hljs-string">&#x27;&lt;/span&gt;&lt;/td&gt;\n                    &lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+Rating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+Id = re.findall(<span class="hljs-string">&#x27;&lt;a href=&quot;/stats/players(.*?)&quot; data-tooltip-id=&quot;uniqueTooltipId&#x27;</span>,content)
+Rounds = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail gtSmartphone-only&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+<span class="hljs-comment">#名字和rating的数据清理</span>
+tempzz = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> tempzz &lt; <span class="hljs-built_in">len</span>(Name):
+    Name[tempzz]=Name[tempzz].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+    Rating[tempzz]=Rating[tempzz].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+    tempzz = tempzz + <span class="hljs-number">1</span></code></pre></div>
+
+<p>解释一下为什么需要后面的这个while循环：hltv会生成一个uniquetooltipid，这个ID会随着每一次进入网页而变化。我们通过这种方式将以只后数据前的<code>&gt;</code>作为指针，切断之前的所有字符，从而得到一个美丽的数据。</p>
+<p>接下来的T方rating和CT方rating同上述如出一辙。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#CT</span>
+driver.get(webfront+eventfilter+<span class="hljs-string">&quot;&amp;side=COUNTER_TERRORIST&quot;</span>+minMapCountfilter) 
+content = driver.page_source
+CTname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+CTrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+
+<span class="hljs-comment">#T</span>
+driver.get(webfront+eventfilter+<span class="hljs-string">&quot;&amp;side=TERRORIST&quot;</span>+minMapCountfilter) 
+content = driver.page_source
+Tname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+Trating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)</code></pre></div>
+
+<p>然后是首杀。这里首杀会爬取到表格中其他的数据，因而在爬出的数据中筛选一下：</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#openingkill</span>
+driver.get(webfront+<span class="hljs-string">&quot;/openingkills&quot;</span>+eventfilter+minMapCountfilter)
+content = driver.page_source
+ok = re.findall(<span class="hljs-string">&#x27;class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+Openingkillrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+Openingkillname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+count=<span class="hljs-number">0</span>
+Openingkillattempts=[]
+Openingkillsuccess=[]
+<span class="hljs-comment"># 筛选数据</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ok:
+    <span class="hljs-keyword">if</span> count%<span class="hljs-number">4</span> == <span class="hljs-number">2</span>:
+        Openingkillattempts.append(i)
+    <span class="hljs-keyword">if</span> count%<span class="hljs-number">4</span> == <span class="hljs-number">3</span>:
+        Openingkillsuccess.append(i)
+    count+=<span class="hljs-number">1</span></code></pre></div>
+
+<p>手枪局的爬取也毫无亮点。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#手枪局</span>
+driver.get(webfront+<span class="hljs-string">&quot;/pistols&quot;</span>+eventfilter+minMapCountfilter) 
+content = driver.page_source
+Pistolname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+Pistolrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)</code></pre></div>
+
+<p>这里的数据其实也是“不干净的”，但是我们可以在录入之时在将他洗干净，所以Never mind.<br>然后就是Big event。HLTV提供了Big event的筛子，可以直接放心使用。为此我们在打开网址中加入<code>&amp;matchType=BigEvents</code>。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#Bigevent</span>
+driver.get(webfront+eventfilter+<span class="hljs-string">&quot;&amp;matchType=BigEvents&quot;</span>+<span class="hljs-string">&quot;&amp;minMapCount=0&quot;</span>)
+content = driver.page_source
+Bigeventname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+Bigeventmap = re.findall(<span class="hljs-string">&#x27;&lt;/span&gt;&lt;/td&gt;\n                    &lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+Bigeventrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)</code></pre></div>
+
+<p>supereliteevent 和 eliteevent 就没有这么简单了：我们需要定制filter为其使用。遍历时将这些条件都填充入网址中：</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#Supereliteevent</span>
+tempfilter = <span class="hljs-string">&quot;?startDate=all&quot;</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> supereliteevent:
+    tempfilter = tempfilter + i
+driver.get(webfront+tempfilter+<span class="hljs-string">&quot;&amp;minMapCount=0&quot;</span>)
+content = driver.page_source
+Supereliteeventname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+Supereliteeventmap = re.findall(<span class="hljs-string">&#x27;&lt;/span&gt;&lt;/td&gt;\n                    &lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+Supereliteeventrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+
+<span class="hljs-comment">#Eliteevent</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> eliteevent:
+    tempfilter = tempfilter + i
+driver.get(webfront+tempfilter+<span class="hljs-string">&quot;&amp;minMapCount=0&quot;</span>)
+content = driver.page_source
+Eliteeventname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+Eliteeventmap = re.findall(<span class="hljs-string">&#x27;&lt;/span&gt;&lt;/td&gt;\n                    &lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+Eliteeventrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)</code></pre></div>
+
+<p>接下来是最令人头痛的淘汰赛。由于HLTV没有给出筛选选项，因此我们只能退而求其次使用time filter筛选出淘汰赛的日期。<br><code>然后就发现电竞世界杯小组赛淘汰赛同一天开打，只能使用BO3筛选。下次小组赛都是BO3的话就只能爬单场比赛了qwq</code></p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#supereliteeventplayoff</span>
+Supereliteeventplayoffname = []
+Supereliteeventplayoffmap = []
+Supereliteeventplayoffratingsum = []
+Supereliteeventplayoffrounds = []
+
+<span class="hljs-keyword">for</span> i,j <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(supereliteevent,supereliteeventplayoff):
+    driver.get(webfront+<span class="hljs-string">&quot;?&quot;</span>+i+j)
+    content = driver.page_source
+    supereliteeventplayofftempname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+    supereliteeventplayofftempmap = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    supereliteeventplayoffrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+    supereliteeventplayoffrounds = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail gtSmartphone-only&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    supereliteeventplayoffmap = []
+    supereliteeventplayoffname = []
+    tempzz2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> tempzz2 &lt;<span class="hljs-built_in">len</span>(supereliteeventplayofftempmap):
+        <span class="hljs-keyword">if</span> tempzz2 ==<span class="hljs-number">0</span> <span class="hljs-keyword">or</span> tempzz2%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>:
+            supereliteeventplayoffmap.append(supereliteeventplayofftempmap[tempzz2])
+            supereliteeventplayoffname.append(supereliteeventplayofftempname[tempzz2])
+        tempzz2 =tempzz2+<span class="hljs-number">1</span>
+    tempzz2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> tempzz2 &lt; <span class="hljs-built_in">len</span>(supereliteeventplayoffname):
+        supereliteeventplayoffname[tempzz2]=supereliteeventplayoffname[tempzz2].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        supereliteeventplayoffrating[tempzz2]=supereliteeventplayoffrating[tempzz2].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        tempzz2 = tempzz2 + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1,round1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(supereliteeventplayoffname,supereliteeventplayoffmap,supereliteeventplayoffrating,supereliteeventplayoffrounds):
+        <span class="hljs-comment">#过滤异常数据</span>
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        belong = <span class="hljs-number">0</span>
+        tempzz1 = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> tempzz1 &lt; <span class="hljs-built_in">len</span>(Supereliteeventplayoffname):
+            <span class="hljs-keyword">if</span> Supereliteeventplayoffname[tempzz1] == name1:
+                Supereliteeventplayoffmap[tempzz1] = Supereliteeventplayoffmap[tempzz1] + <span class="hljs-built_in">float</span>(map1)
+                Supereliteeventplayoffratingsum[tempzz1] = Supereliteeventplayoffratingsum[tempzz1] + (<span class="hljs-built_in">float</span>(rating1) * <span class="hljs-built_in">float</span>(round1))
+                Supereliteeventplayoffrounds[tempzz1] = Supereliteeventplayoffrounds[tempzz1] + <span class="hljs-built_in">float</span>(round1)
+                belong = <span class="hljs-number">1</span>
+                <span class="hljs-keyword">break</span>
+            tempzz1 = tempzz1 + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> belong == <span class="hljs-number">0</span>:
+            Supereliteeventplayoffname.append(name1)
+            Supereliteeventplayoffmap.append(<span class="hljs-built_in">float</span>(map1))
+            Supereliteeventplayoffratingsum.append(<span class="hljs-built_in">float</span>(round1)*<span class="hljs-built_in">float</span>(rating1))
+            Supereliteeventplayoffrounds.append(<span class="hljs-built_in">float</span>(round1))
+
+<span class="hljs-comment">#eliteeventplayoff</span>
+tempzz3 = <span class="hljs-number">0</span>
+Eliteeventplayoffname = []
+Eliteeventplayoffmap = []
+Eliteeventplayoffratingsum = []
+Eliteeventplayoffrounds = []
+<span class="hljs-keyword">while</span> tempzz3 &lt; <span class="hljs-built_in">len</span>(Supereliteeventplayoffname):
+    Eliteeventplayoffname.append(Supereliteeventplayoffname[tempzz3])
+    Eliteeventplayoffmap.append(Supereliteeventplayoffmap[tempzz3])
+    Eliteeventplayoffratingsum.append(Supereliteeventplayoffratingsum[tempzz3])
+    Eliteeventplayoffrounds.append(Supereliteeventplayoffrounds[tempzz3])
+    tempzz3 = tempzz3 + <span class="hljs-number">1</span>
+tempzz3 = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i,j <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(eliteevent,eliteeventplayoff):
+    driver.get(webfront+<span class="hljs-string">&quot;?&quot;</span>+i+j)
+    content = driver.page_source
+    eliteeventplayofftempname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+    eliteeventplayofftempmap = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    eliteeventplayoffrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+    eliteeventplayoffrounds = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail gtSmartphone-only&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    eliteeventplayoffmap = []
+    eliteeventplayoffname = []
+    tempzz2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> tempzz2 &lt;<span class="hljs-built_in">len</span>(eliteeventplayofftempmap):
+        <span class="hljs-keyword">if</span> tempzz2 ==<span class="hljs-number">0</span> <span class="hljs-keyword">or</span> tempzz2%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>:
+            eliteeventplayoffmap.append(eliteeventplayofftempmap[tempzz2])
+            eliteeventplayoffname.append(eliteeventplayofftempname[tempzz2])
+        tempzz2 =tempzz2+<span class="hljs-number">1</span>
+    tempzz2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> tempzz2 &lt; <span class="hljs-built_in">len</span>(eliteeventplayoffname):
+        eliteeventplayoffname[tempzz2]=eliteeventplayoffname[tempzz2].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        eliteeventplayoffrating[tempzz2]=eliteeventplayoffrating[tempzz2].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        tempzz2 = tempzz2 + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1,round1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(eliteeventplayoffname,eliteeventplayoffmap,eliteeventplayoffrating,eliteeventplayoffrounds):
+        <span class="hljs-comment">#过滤异常数据</span>
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        belong = <span class="hljs-number">0</span>
+        tempzz1 = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> tempzz1 &lt; <span class="hljs-built_in">len</span>(Eliteeventplayoffname):
+            <span class="hljs-keyword">if</span> Eliteeventplayoffname[tempzz1] == name1:
+                Eliteeventplayoffmap[tempzz1] = Eliteeventplayoffmap[tempzz1] + <span class="hljs-built_in">float</span>(map1)
+                Eliteeventplayoffratingsum[tempzz1] = Eliteeventplayoffratingsum[tempzz1] + (<span class="hljs-built_in">float</span>(rating1) * <span class="hljs-built_in">float</span>(round1))
+                Eliteeventplayoffrounds[tempzz1] = Eliteeventplayoffrounds[tempzz1] +<span class="hljs-built_in">float</span>(round1)
+                belong = <span class="hljs-number">1</span>
+                <span class="hljs-keyword">break</span>
+            tempzz1 = tempzz1 + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> belong == <span class="hljs-number">0</span>:
+            Eliteeventplayoffname.append(name1)
+            Eliteeventplayoffmap.append(<span class="hljs-built_in">float</span>(map1))
+            Eliteeventplayoffratingsum.append(<span class="hljs-built_in">float</span>(round1)*<span class="hljs-built_in">float</span>(rating1))
+            Eliteeventplayoffrounds.append(<span class="hljs-built_in">float</span>(round1))
+
+<span class="hljs-comment">#Bigeventplayoff</span>
+tempzz3 = <span class="hljs-number">0</span>
+Bigeventplayoffname = []
+Bigeventplayoffmap = []
+Bigeventplayoffratingsum = []
+Bigeventplayoffrounds = []
+<span class="hljs-keyword">while</span> tempzz3 &lt; <span class="hljs-built_in">len</span>(Eliteeventplayoffname):
+    Bigeventplayoffname.append(Eliteeventplayoffname[tempzz3])
+    Bigeventplayoffmap.append(Eliteeventplayoffmap[tempzz3])
+    Bigeventplayoffratingsum.append(Eliteeventplayoffratingsum[tempzz3])
+    Bigeventplayoffrounds.append(Eliteeventplayoffrounds[tempzz3])
+    tempzz3 = tempzz3 +<span class="hljs-number">1</span>
+tempzz3 = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> i,j <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(bigevent,bigeventplayoff):
+    driver.get(webfront+<span class="hljs-string">&quot;?&quot;</span>+i+j)
+    content = driver.page_source
+    bigeventplayofftempname = re.findall(<span class="hljs-string">&#x27;data-tooltip-id=&quot;uniqueTooltipId-(.*?)&lt;/a&gt;&lt;/td&gt;&#x27;</span>,content)
+    bigeventplayofftempmap = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    bigeventplayoffrating = re.findall(<span class="hljs-string">&#x27;class=&quot;ratingCol(.*?)&lt;/td&gt;&#x27;</span>,content)
+    bigeventplayoffrounds = re.findall(<span class="hljs-string">&#x27;&lt;td class=&quot;statsDetail gtSmartphone-only&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    bigeventplayoffmap = []
+    bigeventplayoffname = []
+    tempzz2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> tempzz2 &lt;<span class="hljs-built_in">len</span>(bigeventplayofftempmap):
+        <span class="hljs-keyword">if</span> tempzz2 ==<span class="hljs-number">0</span> <span class="hljs-keyword">or</span> tempzz2%<span class="hljs-number">2</span>==<span class="hljs-number">0</span>:
+            bigeventplayoffmap.append(bigeventplayofftempmap[tempzz2])
+            bigeventplayoffname.append(bigeventplayofftempname[tempzz2])
+        tempzz2 =tempzz2+<span class="hljs-number">1</span>
+    tempzz2 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> tempzz2 &lt; <span class="hljs-built_in">len</span>(bigeventplayoffname):
+        bigeventplayoffname[tempzz2]=bigeventplayoffname[tempzz2].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        bigeventplayoffrating[tempzz2]=bigeventplayoffrating[tempzz2].split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        tempzz2 = tempzz2 + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1,round1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(bigeventplayoffname,bigeventplayoffmap,bigeventplayoffrating,bigeventplayoffrounds):
+        <span class="hljs-comment">#过滤异常数据</span>
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        belong = <span class="hljs-number">0</span>
+        tempzz1 = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> tempzz1 &lt; <span class="hljs-built_in">len</span>(Bigeventplayoffname):
+            <span class="hljs-keyword">if</span> Bigeventplayoffname[tempzz1] == name1:                
+                Bigeventplayoffmap[tempzz1] = Bigeventplayoffmap[tempzz1] + <span class="hljs-built_in">float</span>(map1)
+                Bigeventplayoffratingsum[tempzz1] = Bigeventplayoffratingsum[tempzz1] + (<span class="hljs-built_in">float</span>(rating1) * <span class="hljs-built_in">float</span>(round1))
+                Bigeventplayoffrounds[tempzz1] = Bigeventplayoffrounds[tempzz1] +<span class="hljs-built_in">float</span>(round1)
+                belong = <span class="hljs-number">1</span>
+                <span class="hljs-keyword">break</span>
+            tempzz1 = tempzz1 + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> belong == <span class="hljs-number">0</span>:
+            Bigeventplayoffname.append(name1)
+            Bigeventplayoffmap.append(<span class="hljs-built_in">float</span>(map1))
+            Bigeventplayoffratingsum.append(<span class="hljs-built_in">float</span>(rating1)*<span class="hljs-built_in">float</span>(round1))
+            Bigeventplayoffrounds.append(<span class="hljs-built_in">float</span>(round1))</code></pre></div>
+
+<p>接下来统计选手个人页面数据。先是一些简单的加入上传列表：</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#选手个人数据统计和打印</span>
+<span class="hljs-keyword">for</span> name,mapcount,rating,<span class="hljs-built_in">id</span>,rounds <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Name,Mapcount,Rating,Id,Rounds):
+    <span class="hljs-comment">#加入选手姓名，图池数，rating，回合数（用于计算）</span>
+    row = [name,mapcount,rating,rounds]
+    ratingnum = <span class="hljs-built_in">float</span>(rating)
+    <span class="hljs-keyword">if</span> ratingnum &lt;= minrating:
+        <span class="hljs-keyword">break</span>
+    <span class="hljs-comment">#上传CTrating</span>
+    <span class="hljs-keyword">for</span> name1,rating1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(CTname,CTrating):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(rating1)
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-comment">#上传Trating</span>
+    <span class="hljs-keyword">for</span> name1,rating1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Tname,Trating):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(rating1)
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-comment">#上传首杀相关数据（回合首杀在选手个人页面中）</span>
+    <span class="hljs-keyword">for</span> openingkillname,openingkillattempts,openingkillsuccess,openingkillrating <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Openingkillname,Openingkillattempts,Openingkillsuccess,Openingkillrating):
+        openingkillname=openingkillname.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        openingkillrating=openingkillrating.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> openingkillname == name:
+            row.append(openingkillattempts)
+            row.append(openingkillsuccess)
+            row.append(openingkillrating)
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-comment">#上传手枪局rating</span>
+    <span class="hljs-keyword">for</span> name1,rating1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Pistolname,Pistolrating):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(rating1)
+            <span class="hljs-keyword">break</span></code></pre></div>
+
+<p>完事了之后直接进入选手个人数据页面。<code>这里又有两个小事故。第一个是忘记html里面符号的变换了，还有910这个人的ID全是数字，害得我不得不重写了一个pattern...</code></p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#网址清理，用于进入选手个人界面</span>
+    statsuffix = <span class="hljs-built_in">id</span>.replace(<span class="hljs-string">&#x27;amp;&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+    driver.get(webfront+statsuffix)
+    content = driver.page_source
+    <span class="hljs-comment">#获取选手面板数据，rating已经统计不被需要</span>
+    Playerstatform=re.findall(<span class="hljs-string">&#x27;class=&quot;summaryStatBreakdownDataValue&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    DPR = Playerstatform[<span class="hljs-number">1</span>]
+    row.append(DPR)
+    KAST = Playerstatform[<span class="hljs-number">2</span>]
+    row.append(KAST)
+    IMPACT = Playerstatform[<span class="hljs-number">3</span>]
+    row.append(IMPACT)
+    ADR = Playerstatform[<span class="hljs-number">4</span>]
+    row.append(ADR)
+    KPR = Playerstatform[<span class="hljs-number">5</span>]
+    row.append(KPR)
+    <span class="hljs-comment">#统计选手对阵top5数据</span>
+    VStop5maplist =   re.findall(<span class="hljs-string">&#x27;vs top 5 opponents&lt;/div&gt;\n                      &lt;div class=&quot;rating-maps&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    VStop5map = VStop5maplist[<span class="hljs-number">0</span>]
+    VStop5map = VStop5map.replace(<span class="hljs-string">&#x27;(&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+    VStop5map = VStop5map.replace(<span class="hljs-string">&#x27; maps)&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+    row.append(VStop5map)
+    VStop5rating = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;rating-value&quot;&gt;(.*?)&lt;/div&gt;\n                      &lt;div class=&quot;rating-description&quot;&gt;vs top 5 opponents&#x27;</span>,content)
+    row.append(VStop5rating[<span class="hljs-number">0</span>])
+    <span class="hljs-comment">#统计选手对阵top10数据</span>
+    VStop10maplist = re.findall(<span class="hljs-string">&#x27;vs top 10 opponents&lt;/div&gt;\n                      &lt;div class=&quot;rating-maps&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    VStop10map = VStop10maplist[<span class="hljs-number">0</span>]
+    VStop10map = VStop10map.replace(<span class="hljs-string">&#x27;(&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+    VStop10map = VStop10map.replace(<span class="hljs-string">&#x27; maps)&#x27;</span>,<span class="hljs-string">&#x27;&#x27;</span>)
+    row.append(VStop10map)
+    VStop10rating = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;rating-value&quot;&gt;(.*?)&lt;/div&gt;\n                      &lt;div class=&quot;rating-description&quot;&gt;vs top 10 opponents&#x27;</span>,content)
+    row.append(VStop10rating[<span class="hljs-number">0</span>])</code></pre></div>
+
+<p>接着是individual界面，统计回合击杀和场均首杀：</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#进入individual界面，统计首杀数和回合击杀</span>
+    driver.get(webfront+<span class="hljs-string">&quot;/individual&quot;</span>+statsuffix)
+    content = driver.page_source
+    openingkills = re.findall(<span class="hljs-string">&#x27;Total opening kills&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(openingkills[<span class="hljs-number">0</span>])
+    round0kill = re.findall(<span class="hljs-string">&#x27;0 kill rounds&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(round0kill[<span class="hljs-number">0</span>])
+    round1kill = re.findall(<span class="hljs-string">&#x27;1 kill rounds&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(round1kill[<span class="hljs-number">0</span>])
+    round2kill = re.findall(<span class="hljs-string">&#x27;2 kill rounds&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(round2kill[<span class="hljs-number">0</span>])
+    round3kill = re.findall(<span class="hljs-string">&#x27;3 kill rounds&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(round3kill[<span class="hljs-number">0</span>])
+    round4kill = re.findall(<span class="hljs-string">&#x27;4 kill rounds&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(round4kill[<span class="hljs-number">0</span>])
+    round5kill = re.findall(<span class="hljs-string">&#x27;5 kill rounds&lt;/span&gt;&lt;span&gt;(.*?)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    row.append(round5kill[<span class="hljs-number">0</span>])</code></pre></div>
+
+<p>接着是matches界面，统计rating相关的稳定性和获胜地图rating。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#进入match界面，统计对局的小局rating和获胜地图rating</span>
+    driver.get(webfront+<span class="hljs-string">&quot;/matches&quot;</span>+statsuffix)
+    content = driver.page_source
+
+    singlemaprating = re.findall(<span class="hljs-string">&#x27;data-sort-column-key=&quot;rating&quot;&gt;(.*?)&lt;/td&gt;&#x27;</span>,content)
+    singlemapround = re.findall(<span class="hljs-string">r&#x27;&lt;/span&gt;&lt;/a&gt;&lt;span&gt; \((.*?)\)&lt;/span&gt;&lt;/div&gt;&#x27;</span>,content)
+    singlemapwinround = <span class="hljs-number">0</span>
+    singlemapwinrating = <span class="hljs-number">0</span>
+    ratingabove085 = <span class="hljs-number">0</span>
+    ratingabove100 = <span class="hljs-number">0</span>
+    ratingabove115 = <span class="hljs-number">0</span>
+    ratingabove130 = <span class="hljs-number">0</span>
+    tempzz4 = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> singlemaprating:
+        rating1 = <span class="hljs-built_in">float</span>(i)
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">float</span>(singlemapround[<span class="hljs-number">2</span>*tempzz4]) &gt; <span class="hljs-built_in">float</span>(singlemapround[<span class="hljs-number">2</span>*tempzz4+<span class="hljs-number">1</span>]) :
+            totalround = <span class="hljs-built_in">float</span>(singlemapround[<span class="hljs-number">2</span>*tempzz4]) + <span class="hljs-built_in">float</span>(singlemapround[<span class="hljs-number">2</span>*tempzz4+<span class="hljs-number">1</span>])
+            singlemapwinround = singlemapwinround + totalround 
+            singlemapwinrating = singlemapwinrating + (totalround * rating1)
+        <span class="hljs-keyword">if</span> rating1 &gt;= <span class="hljs-number">0.85</span>:
+            ratingabove085 += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> rating1 &gt;= <span class="hljs-number">1</span>:
+            ratingabove100 += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> rating1 &gt;= <span class="hljs-number">1.15</span>:
+            ratingabove115 += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> rating1 &gt;= <span class="hljs-number">1.30</span>:
+            ratingabove130 += <span class="hljs-number">1</span> 
+        tempzz4 = tempzz4 + <span class="hljs-number">1</span>
+    row.append(ratingabove085)
+    row.append(ratingabove100)
+    row.append(ratingabove115)
+    row.append(ratingabove130)</code></pre></div>
+
+<p>然后是clutch页面。这个页面的网址跟前面都不太一样，所以需要一个pattern。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#统计选手残局获胜次数</span>
+    pattern = <span class="hljs-string">r&quot;(/[0-9]+)&quot;</span>
+    driver.get(webfront+<span class="hljs-string">&quot;/clutches&quot;</span>+re.sub(pattern,<span class="hljs-string">r&#x27;\1&#x27;</span>+<span class="hljs-string">&quot;/1on1&quot;</span>,statsuffix,<span class="hljs-number">1</span>))
+    content = driver.page_source
+    clutch1v1win = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;value&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    row.append(clutch1v1win[<span class="hljs-number">0</span>])
+    driver.get(webfront+<span class="hljs-string">&quot;/clutches&quot;</span>+re.sub(pattern,<span class="hljs-string">r&#x27;\1&#x27;</span>+<span class="hljs-string">&quot;/1on2&quot;</span>,statsuffix,<span class="hljs-number">1</span>))
+    content = driver.page_source
+    clutch1v2win = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;value&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    row.append(clutch1v2win[<span class="hljs-number">0</span>])
+    driver.get(webfront+<span class="hljs-string">&quot;/clutches&quot;</span>+re.sub(pattern,<span class="hljs-string">r&#x27;\1&#x27;</span>+<span class="hljs-string">&quot;/1on3&quot;</span>,statsuffix,<span class="hljs-number">1</span>))
+    content = driver.page_source
+    clutch1v3win = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;value&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    row.append(clutch1v3win[<span class="hljs-number">0</span>])
+    driver.get(webfront+<span class="hljs-string">&quot;/clutches&quot;</span>+re.sub(pattern,<span class="hljs-string">r&#x27;\1&#x27;</span>+<span class="hljs-string">&quot;/1on4&quot;</span>,statsuffix,<span class="hljs-number">1</span>))
+    content = driver.page_source
+    clutch1v4win = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;value&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    row.append(clutch1v4win[<span class="hljs-number">0</span>])
+    driver.get(webfront+<span class="hljs-string">&quot;/clutches&quot;</span>+re.sub(pattern,<span class="hljs-string">r&#x27;\1&#x27;</span>+<span class="hljs-string">&quot;/1on5&quot;</span>,statsuffix,<span class="hljs-number">1</span>))
+    content = driver.page_source
+    clutch1v5win = re.findall(<span class="hljs-string">&#x27;&lt;div class=&quot;value&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>,content)
+    row.append(clutch1v5win[<span class="hljs-number">0</span>])</code></pre></div>
+
+<p>然后是上传没有上传的bigevent等数据。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#上传bigevent等数据</span>
+    ishere = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Bigeventname,Bigeventmap,Bigeventrating):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(map1)
+            row.append(rating1)
+            ishere = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">if</span> ishere ==<span class="hljs-number">0</span>:
+        row.append(<span class="hljs-number">0</span>)
+        row.append(<span class="hljs-string">&quot;NAN&quot;</span>)
+    ishere = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Eliteeventname,Eliteeventmap,Eliteeventrating):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(map1)
+            row.append(rating1)
+            ishere = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">if</span> ishere ==<span class="hljs-number">0</span>:
+        row.append(<span class="hljs-number">0</span>)
+        row.append(<span class="hljs-string">&quot;NAN&quot;</span>)
+    ishere = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Supereliteeventname,Supereliteeventmap,Supereliteeventrating):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        rating1=rating1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(map1)
+            row.append(rating1)
+            ishere = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">if</span> ishere ==<span class="hljs-number">0</span>:
+        row.append(<span class="hljs-number">0</span>)
+        row.append(<span class="hljs-string">&quot;NAN&quot;</span>)
+    ishere = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1,round1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Bigeventplayoffname,Bigeventplayoffmap,Bigeventplayoffratingsum,Bigeventplayoffrounds):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(map1)
+            row.append(rating1/round1)
+            ishere = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">if</span> ishere ==<span class="hljs-number">0</span>:
+        row.append(<span class="hljs-number">0</span>)
+        row.append(<span class="hljs-string">&quot;NAN&quot;</span>)
+    ishere = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1,round1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Eliteeventplayoffname,Eliteeventplayoffmap,Eliteeventplayoffratingsum,Eliteeventplayoffrounds):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(map1)
+            row.append(rating1/round1)
+            ishere = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">if</span> ishere ==<span class="hljs-number">0</span>:
+        row.append(<span class="hljs-number">0</span>)
+        row.append(<span class="hljs-string">&quot;NAN&quot;</span>)
+    ishere = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> name1,map1,rating1,round1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(Supereliteeventplayoffname,Supereliteeventplayoffmap,Supereliteeventplayoffratingsum,Supereliteeventplayoffrounds):
+        name1=name1.split(keyword, <span class="hljs-number">1</span>)[-<span class="hljs-number">1</span>].strip()
+        <span class="hljs-keyword">if</span> name1 == name:
+            row.append(map1)
+            row.append(rating1/round1)
+            ishere = <span class="hljs-number">1</span>
+            <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">if</span> ishere ==<span class="hljs-number">0</span>:
+        row.append(<span class="hljs-number">0</span>)
+        row.append(<span class="hljs-string">&quot;NAN&quot;</span>)
+    row.append(singlemapwinrating/singlemapwinround) <span class="hljs-comment">#后加的上传获胜地图rating</span>
+    <span class="hljs-built_in">print</span>(row) <span class="hljs-comment">#用于测试</span>
+    ws.append(row) <span class="hljs-comment">#在表格中打印</span></code></pre></div>
+
+<p>最后表存一下，关闭游览器，大功告成。</p>
+<div class="code-wrapper"><pre><code class="hljs py"><span class="hljs-comment">#保存表格</span>
+wb.save(file_path)
+<span class="hljs-comment"># 关闭浏览器 </span>
+driver.close()            
+driver.quit()</code></pre></div>
+
+<p><strong>如果对你有帮助的话，欢迎留言</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+        <a href="/tags/Game/" class="print-no-link">#Game</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 编写的HLTV网站选手数据页面爬取脚本</div>
+      <div>http://vistonz.github.io/2024/07/23/hltv/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Viston Zhang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/23/ABaTravel/" title="小城记   阿坝县">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">小城记   阿坝县</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"17ns1rVQb5fKQ9FWqrWe4ejy-MdYXbMMI","appKey":"E7njpIc0p6QgvpuXq5RPNhhM","path":"window.location.pathname","placeholder":"说点什么","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/danceline.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
